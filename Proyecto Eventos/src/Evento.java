@@ -11,18 +11,32 @@ public class Evento {
 
     private String Fecha;
     private String Ubicación;
+
+    private int Edad_minima;
+
+    private int Aforo;
+
     public List<Evento> eventos = new ArrayList<>();
 
 
-    public Evento(String nombre, String descripcion, String ubicacion, String fecha) {
+    public Evento(String nombre, String descripcion, String ubicacion, String fecha, int edad_minima, int aforo) {
 
         this.Nombre = nombre;
         this.Descripcion = descripcion;
         this.Ubicación = ubicacion;
         this.Fecha = fecha;
         this.Codigo = this.contador++;
+        this.Edad_minima = edad_minima;
+        this.Aforo = aforo;
     }
 
+    public int get_aforo(){
+        return this.Aforo;
+    }
+
+    public void set_aforo(int nuevo_valor){
+        this.Aforo = nuevo_valor;
+    }
     public void deleteEvent(int codigo) {
         Evento current = null;
         for (Evento event : eventos) { //RECORRE LA LISTA DE EVENTOS (OBJETOS)
@@ -36,17 +50,17 @@ public class Evento {
 
     }
 
-    public void AddEvent(String nombre, String descripcion, String ubicacion, String fecha) {
-        this.eventos.add(new Evento(nombre, descripcion, ubicacion, fecha));
+    public void AddEvent(String nombre, String descripcion, String ubicacion, String fecha, int edad_minima, int aforo) {
+        this.eventos.add(new Evento(nombre, descripcion, ubicacion, fecha, edad_minima, aforo));
 
     }
 
     public void print_event(Evento evento) { //METODO PARA IMPRIMIR EVENTOS, YA SEA UNO EN ESPECIFICO, O TODOS LOS QUE ESTAN EN LA LISTA
         if (evento == null) //SI EL PARAMETRO "evento" ES NULO ENTONCES SE IMPRIME TODOS LOS EVENTOS DE LA LISTA
             for (Evento event : eventos)
-                System.out.println("\n Código: " + event.Codigo + "\n Nombre: " + event.Nombre + "\n Descripción: " + event.Descripcion + "\n Ubicación: " + event.Ubicación + "\n Fecha: " + event.Fecha + "\n ############");
+                System.out.println("\n Código: " + event.Codigo + "\n Nombre: " + event.Nombre + "\n Descripción: " + event.Descripcion + "\n Ubicación: " + event.Ubicación + "\n Fecha: " + event.Fecha + "\n Edad Minima: " + event.Edad_minima + "\n Aforo: " + event.Aforo + "\n ############");
         if (evento != null){ // //SI EL PARAMETRO "evento" NO ES NULO ENTONCES SE IMPRIME EL EVENTO QUE TENGA EL CODIGO QUE LE MANDARON
-            System.out.println("\n Código: " + evento.Codigo + "\n Nombre: " + evento.Nombre + "\n Descripción: " + evento.Descripcion + "\n Ubicación: " + evento.Ubicación + "\n Fecha: " + evento.Fecha + "\n ############");
+            System.out.println("\n Código: " + evento.Codigo + "\n Nombre: " + evento.Nombre + "\n Descripción: " + evento.Descripcion + "\n Ubicación: " + evento.Ubicación + "\n Fecha: " + evento.Fecha + "\n Edad Minima: " + evento.Edad_minima + "\n Aforo: " + evento.Aforo+ "\n ############");
         }
     }
 
@@ -55,13 +69,12 @@ public class Evento {
         Evento event = search_event(codigo);
 
 
-        if (event == null){
+        if (event != null){
 
             if (opcion == 1 ) {
 
                 System.out.println("####ANTES####");
                 print_event(event);
-
                 event.Nombre = nuevo_atributo;
                 System.out.println("####DESPUES####");
                 print_event(event);
