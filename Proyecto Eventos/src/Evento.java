@@ -44,6 +44,7 @@ public class Evento {
     public void set_Boletas_disponibles(int nuevo_valor){
         this.Boletas_disponibles = nuevo_valor;
     }
+
     public void deleteEvent(int codigo) {
         Evento current = null;
         for (Evento event : eventos) { //RECORRE LA LISTA DE EVENTOS (OBJETOS)

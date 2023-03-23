@@ -8,7 +8,7 @@ public class Usuario {
         evento.set_Boletas_disponibles((evento.get_Boletas_disponibles()) - 1);
     }
 
-    public void fill_form(Evento evento){
+    public void fill_form(Evento evento){  //METODO QUE LE PERMITE AL USUARIO LLENAR UN FORMULARIO, SE LLAMA CUANDO EL USUARIO QUIERE COMPRAR UNA BOLETA
 
         System.out.println("\n Por favor llena estos datos: " );
 
