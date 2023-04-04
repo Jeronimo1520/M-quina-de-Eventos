@@ -1,24 +1,24 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 public class Evento {
 
     private static int contador = 0;
     public int Codigo;
-    private String Nombre;
-    private String Descripcion;
+    public String Nombre;
+    public String Descripcion;
 
-    private String Fecha;
-    private String Ubicación;
+    public String Fecha;
+    public String Ubicación;
 
-    private int Edad_minima;
+    public int Edad_minima;
 
-    private int Aforo;
+    public int Aforo;
 
-    private int Boletas_disponibles;
+    public int Boletas_disponibles;
 
-    public List<Evento> eventos = new ArrayList<>();
+    public static List<Evento> eventos = new ArrayList<>();
 
 
     public Evento(String nombre, String descripcion, String ubicacion, String fecha, int edad_minima, int aforo) {
@@ -33,13 +33,18 @@ public class Evento {
         this.Boletas_disponibles = aforo;
     }
 
-    public int get_Boletas_disponibles(){
-        return this.Boletas_disponibles;
-    }
-
-    public int get_Edad_minima(){
+    public int get_Boletas_disponibles() {return this.Boletas_disponibles;}
+    public int getEdadMinima(){
         return this.Edad_minima;
     }
+    public int getAforo(){
+        return this.Aforo;
+    }
+
+    public String getUbicacion(){
+        return this.Ubicación;
+    }
+    public int get_Edad_minima(){return this.Edad_minima;}
 
     public void set_Boletas_disponibles(int nuevo_valor){
         this.Boletas_disponibles = nuevo_valor;
@@ -55,110 +60,85 @@ public class Evento {
             }
         }
         this.eventos.remove(current);//Y AHORA USAMOS LA VARIABLE PARA REMOVER EL EVENTO CON EL METODO REMOVE, ASI COMO IMPERATIVO IMPERATIVO COMO QUE NO
-
     }
-
     public void AddEvent(String nombre, String descripcion, String ubicacion, String fecha, int edad_minima, int aforo) {
         this.eventos.add(new Evento(nombre, descripcion, ubicacion, fecha, edad_minima, aforo));
-
     }
-
     public void print_event(Evento evento) { //METODO PARA IMPRIMIR EVENTOS, YA SEA UNO EN ESPECIFICO, O TODOS LOS QUE ESTAN EN LA LISTA
         if (evento == null) //SI EL PARAMETRO "evento" ES NULO ENTONCES SE IMPRIME TODOS LOS EVENTOS DE LA LISTA
-            for (Evento event : eventos)
-                System.out.println("\n Código: " + event.Codigo + "\n Nombre: " + event.Nombre + "\n Descripción: " + event.Descripcion + "\n Ubicación: " + event.Ubicación + "\n Fecha: " + event.Fecha + "\n Edad Minima: " + event.Edad_minima + "\n Aforo: " + event.Aforo + "\n Boletas disonibles: " + event.Boletas_disponibles + "\n ############");
+            eventos.forEach(evento1 ->
+                    System.out.println("\n Código: " + evento1.Codigo +
+                            "\n Nombre: " + evento1.Nombre +
+                            "\n Descripción: " + evento1.Descripcion +
+                            "\n Ubicación: " + evento1.Ubicación +
+                            "\n Fecha: " + evento1.Fecha + "\n Edad Minima: " +
+                            evento1.Edad_minima + "\n Aforo: " +
+                            evento1.Aforo + "\n Boletas disonibles: " +
+                            evento1.Boletas_disponibles + "\n ############"));
         if (evento != null){ // //SI EL PARAMETRO "evento" NO ES NULO ENTONCES SE IMPRIME EL EVENTO QUE TENGA EL CODIGO QUE LE MANDARON
             System.out.println("\n Código: " + evento.Codigo + "\n Nombre: " + evento.Nombre + "\n Descripción: " + evento.Descripcion + "\n Ubicación: " + evento.Ubicación + "\n Fecha: " + evento.Fecha + "\n Edad Minima: " + evento.Edad_minima + "\n Aforo: " + evento.Aforo+ "\n Boletas disponibles: " + evento.Boletas_disponibles + "\n ############");
         }
     }
-
     public void modifyEvent(int codigo, int opcion, String nuevo_atributo, int nueva_cifra){ //ESTO FUNCIONA PERO ESTA EN CONSTRUCCION, VIA CERRADA
         String atributo;
-        Evento event = search_event(codigo);
-
+        Evento event = search_event2(codigo);
         if (event != null){
-
-            if (opcion == 1 ) {
-
-                System.out.println("####ANTES####");
-                print_event(event);
-                event.Nombre = nuevo_atributo;
-                System.out.println("####DESPUES####");
-                print_event(event);
-
-            }
-
-            if (opcion == 2 ) {
-
-
-                System.out.println("####ANTES####");
-                print_event(event);
-
-                event.Descripcion = nuevo_atributo;
-                System.out.println("####DESPUES####");
-                print_event(event);
-            }
-
-            if (opcion == 3 ) {
-
-
-                System.out.println("####ANTES####");
-                print_event(event);
-
-                event.Ubicación = nuevo_atributo;
-                System.out.println("####DESPUES####");
-                print_event(event);
-            }
-
-            if (opcion == 4 ) {
-
-                System.out.println("####ANTES####");
-                print_event(event);
-
-                event.Fecha = nuevo_atributo;
-                System.out.println("####DESPUES####");
-                print_event(event);
-            }
-
-            if (opcion == 5){
-                System.out.println("####ANTES####");
-                print_event(event);
-
-                event.Edad_minima = nueva_cifra;
-                System.out.println("####DESPUES####");
-                print_event(event);
-            }
-
-            if (opcion == 6){
-                System.out.println("####ANTES####");
-                print_event(event);
-
-                event.Aforo = nueva_cifra;
-                System.out.println("####DESPUES####");
-                print_event(event);
-            }
-
-            if (opcion == 7){
-                System.out.println("####ANTES####");
-                print_event(event);
-
-                event.Boletas_disponibles = nueva_cifra;
-                System.out.println("####DESPUES####");
-                print_event(event);
-            }
-
-        }
-
-
-    }
-
-    public Evento search_event(int codigo){ //DEVUELVE EL EVENTO MANDANDOLE SU CODIGO
-        for (Evento event: eventos){
-            if (event.Codigo == codigo) {
-                return event; //RETORNA UN OBJETO
+            switch (opcion) {
+                case 1 -> {
+                    System.out.println("####ANTES####");
+                    print_event(event);
+                    event.Nombre = nuevo_atributo;
+                    System.out.println("####DESPUES####");
+                    print_event(event);
+                }
+                case 2 -> {
+                    System.out.println("####ANTES####");
+                    print_event(event);
+                    event.Descripcion = nuevo_atributo;
+                    System.out.println("####DESPUES####");
+                    print_event(event);
+                }
+                case 3 -> {
+                    System.out.println("####ANTES####");
+                    print_event(event);
+                    event.Ubicación = nuevo_atributo;
+                    System.out.println("####DESPUES####");
+                    print_event(event);
+                }
+                case 4 -> {
+                    System.out.println("####ANTES####");
+                    print_event(event);
+                    event.Fecha = nuevo_atributo;
+                    System.out.println("####DESPUES####");
+                    print_event(event);
+                }
+                case 5 -> {
+                    System.out.println("####ANTES####");
+                    print_event(event);
+                    event.Edad_minima = nueva_cifra;
+                    System.out.println("####DESPUES####");
+                    print_event(event);
+                }
+                case 6 -> {
+                    System.out.println("####ANTES####");
+                    print_event(event);
+                    event.Aforo = nueva_cifra;
+                    System.out.println("####DESPUES####");
+                    print_event(event);
+                }
+                case 7 -> {
+                    System.out.println("####ANTES####");
+                    print_event(event);
+                    event.Boletas_disponibles = nueva_cifra;
+                    System.out.println("####DESPUES####");
+                    print_event(event);
+                }
             }
         }
-        return null; //SI EL CODIGO NO EXISTE RETORNA NULO, SUPUESTAMENTE
     }
-
+    //Metodo de buscar evento cambiado a declarativo
+    public Evento search_event2(int codigo){ //DEVUELVE EL EVENTO MANDANDOLE SU CODIGO
+       Optional<Evento> event = eventos.stream().filter(evento -> evento.Codigo == codigo).findAny();
+        return event.orElseThrow();
+    }
 }
